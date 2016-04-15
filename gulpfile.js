@@ -67,7 +67,7 @@ var gulp         = require('gulp'),
  *
  * Asynchronous browser syncing of assets across multiple devices!! Watches for changes to js, image and php files
  * Although, I think this is redundant, since we have a watch task that does this already.
-*/
+ */
 gulp.task('browser-sync', function() {
   var files = [
     // '**/*.php',
@@ -300,7 +300,7 @@ gulp.task('build', function(cb) {
 gulp.task('default', ['vendorStyles', 'styles', 'rjs', 'images', 'browser-sync'], function () {
   gulp.watch('src/img/**/*', ['images']);
   gulp.watch('src/vendor/**/*', ['vendorStyles']);
-  gulp.watch('src/css/**/*.scss', ['styles']);
+  gulp.watch('src/sass/**/*.scss', ['styles']);
   gulp.watch('src/js/**/*.js', ['rjs', browserSync.reload]);
 
 });
