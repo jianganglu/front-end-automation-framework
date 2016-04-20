@@ -29,7 +29,7 @@ var paths = {
       '!' + basePaths.src + 'vendor/**/*.min.css'
     ],
     vendorDst: basePaths.dst + 'css/',
-    src: basePaths.src + 'sass/themes/*.scss',
+    src: basePaths.src + 'scss/themes/*.scss',
     dst: basePaths.dst + 'css'
   },
   js: {
@@ -344,7 +344,7 @@ gulp.task('default', ['html', 'images', 'vendorStyles', 'styles', 'rjs', 'browse
   gulp.watch('src/assets/img/**/*', ['images']);
   gulp.watch('src/assets/img/sprites/**/*', ['sprite']);
   gulp.watch('src/assets/vendor/**/*', ['vendorStyles']);
-  gulp.watch('src/assets/sass/**/*.scss', ['styles']);
+  gulp.watch('src/assets/scss/**/*.scss', ['styles']);
   gulp.watch('src/assets/js/**/*.js', ['rjs']);
 
 });
