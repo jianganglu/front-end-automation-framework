@@ -3,7 +3,7 @@
 
   require(['jquery'],
     function($) {
-      console.log(typeof $);
+      console.log(4);
     }
   );
 })();
