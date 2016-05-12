@@ -243,8 +243,8 @@ gulp.task('rjs', function() {
               console.log(error.message);
               this.emit('end');
           }}))
-          .pipe(amdOptimize('./src/assets/js/' + jsFileName, {
-            configFile: './src/assets/js/base.js'
+          .pipe(amdOptimize(basePaths.src + '/js/' + jsFileName, {
+            configFile: basePaths.src + '/js/base.js'
           }))
           .pipe(concat(jsFileName + ".js"))
       )
