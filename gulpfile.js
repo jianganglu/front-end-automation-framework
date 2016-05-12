@@ -351,12 +351,12 @@ gulp.task('build', ['clean'], function(cb) {
 gulp.task('default', ['html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs', 'browser-sync'], function () {
   gulp.watch(['dist/**']).on('change', browserSync.reload);
   gulp.watch('src/**/*.html', ['html']);
-  gulp.watch('src/assets/fonts/**/*', ['fonts']);
-  gulp.watch('src/assets/img/**/*', ['images']);
-  gulp.watch('src/assets/img/sprites/**/*', ['sprite']);
-  gulp.watch('src/assets/vendor/**/*', ['vendorStyles']);
-  gulp.watch('src/assets/scss/**/*.scss', ['styles']);
-  gulp.watch('src/assets/js/**/*.js', ['rjs']);
+  gulp.watch(basePaths.src + '/fonts/**/*', ['fonts']);
+  gulp.watch(basePaths.src + '/img/**/*', ['images']);
+  gulp.watch(basePaths.src + '/img/sprites/**/*', ['sprite']);
+  gulp.watch(basePaths.src + '/vendor/**/*', ['vendorStyles']);
+  gulp.watch(basePaths.src + '/scss/**/*.scss', ['styles']);
+  gulp.watch(basePaths.src + '/js/**/*.js', ['rjs']);
 
 });
 
