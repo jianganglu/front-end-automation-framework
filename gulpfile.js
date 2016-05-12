@@ -39,6 +39,16 @@ var paths = {
   fonts: {
     src: basePaths.src + 'fonts/**/*',
     dst: basePaths.dst + 'fonts'
+  },
+  watch: {
+    src: {
+      fonts: basePaths.src + '/fonts/**/*',
+      images: basePaths.src + '/img/**/*',
+      sprite: basePaths.src + '/img/sprites/**/*',
+      vendorStyles: basePaths.src + '/vendor/**/*',
+      styles: basePaths.src + '/scss/**/*.scss',
+      js: basePaths.src + '/js/**/*.js'
+    }
   }
 };
 
@@ -225,7 +235,7 @@ gulp.task('rjs', function() {
       jsFileName = customJs[i].substring(customJs[i].lastIndexOf('/') + 1, customJs[i].length - 3);
 
       gulpMerge(
-        gulp.src('./src/assets/vendor/requirejs/require.js')
+        gulp.src(basePaths.src + '/vendor/requirejs/require.js')
           .pipe(concat('require.js')),
         gulp.src(paths.js.src, {base: 'src'})
           .pipe(plumber({
@@ -351,12 +361,12 @@ gulp.task('build', ['clean'], function(cb) {
 gulp.task('default', ['html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs', 'browser-sync'], function () {
   gulp.watch(['dist/**']).on('change', browserSync.reload);
   gulp.watch('src/**/*.html', ['html']);
-  gulp.watch(basePaths.src + '/fonts/**/*', ['fonts']);
-  gulp.watch(basePaths.src + '/img/**/*', ['images']);
-  gulp.watch(basePaths.src + '/img/sprites/**/*', ['sprite']);
-  gulp.watch(basePaths.src + '/vendor/**/*', ['vendorStyles']);
-  gulp.watch(basePaths.src + '/scss/**/*.scss', ['styles']);
-  gulp.watch(basePaths.src + '/js/**/*.js', ['rjs']);
+  gulp.watch(path.watch.src.fonts, ['fonts']);
+  gulp.watch(path.watch.src.images, ['images']);
+  gulp.watch(path.watch.src.sprite, ['sprite']);
+  gulp.watch(path.watch.src.vendorStyles, ['vendorStyles']);
+  gulp.watch(path.watch.src.styles, ['styles']);
+  gulp.watch(path.watch.src.js, ['rjs']);
 
 });
 
