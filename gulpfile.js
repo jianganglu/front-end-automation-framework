@@ -20,7 +20,7 @@ var paths = {
     dst: './dist/'
   },
   img: {
-    src: [basePaths.src + 'img/**/*.{png,jpg,gif}'],
+    src: [basePaths.src + 'img/**/*.{png,jpg,jpeg,gif,svg}'],
     dst: basePaths.dst + 'img/'
   },
   css: {
