@@ -361,12 +361,12 @@ gulp.task('build', ['clean'], function(cb) {
 gulp.task('default', ['html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs', 'browser-sync'], function () {
   gulp.watch(['dist/**']).on('change', browserSync.reload);
   gulp.watch('src/**/*.html', ['html']);
-  gulp.watch(path.watch.src.fonts, ['fonts']);
-  gulp.watch(path.watch.src.images, ['images']);
-  gulp.watch(path.watch.src.sprite, ['sprite']);
-  gulp.watch(path.watch.src.vendorStyles, ['vendorStyles']);
-  gulp.watch(path.watch.src.styles, ['styles']);
-  gulp.watch(path.watch.src.js, ['rjs']);
+  gulp.watch(paths.watch.src.fonts, ['fonts']);
+  gulp.watch(paths.watch.src.images, ['images']);
+  gulp.watch(paths.watch.src.sprite, ['sprite']);
+  gulp.watch(paths.watch.src.vendorStyles, ['vendorStyles']);
+  gulp.watch(paths.watch.src.styles, ['styles']);
+  gulp.watch(paths.watch.src.js, ['rjs']);
 
 });
 
