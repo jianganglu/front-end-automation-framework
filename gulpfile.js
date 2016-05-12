@@ -277,7 +277,7 @@ gulp.task('images', function() {
  */
 gulp.task('sprite', function() {
   // Generate our spritesheet
-  var spriteData = gulp.src('src/assets/img/sprites/*.png').pipe(spritesmith({
+  var spriteData = gulp.src(basePaths.src + '/img/sprites/*.png').pipe(spritesmith({
     imgName: 'sprite.png',
     cssName: '_sprite.scss',
     cssFormat: 'css',
