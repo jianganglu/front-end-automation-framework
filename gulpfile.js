@@ -102,7 +102,7 @@ gulp.task('browser-sync', function() {
   var files = [
     // '**/*.php',
     // '**/*.html',
-    '**/*.{png,jpg,gif}'
+    '**/*.{png,jpg,jpeg,gif,svg}'
   ];
   browserSync.init(files, {
     server: {
