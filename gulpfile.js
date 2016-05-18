@@ -299,12 +299,12 @@ gulp.task('sprite', function() {
     // DEV: We must buffer our stream into a Buffer for `imagemin`
     .pipe(buffer())
     .pipe(imagemin())
-    .pipe(gulp.dest('dist/assets/img/'));
+    .pipe(gulp.dest(basePaths.dst + 'img/'));
 
   // Pipe CSS stream through CSS optimizer and onto disk
   var cssStream = spriteData.css
     // .pipe(csso())
-    .pipe(gulp.dest('dist/assets/css/'));
+    .pipe(gulp.dest(basePaths.dst + 'css/'));
 
   // Return a merged stream to handle both `end` events
   return merge(imgStream, cssStream);
