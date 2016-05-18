@@ -37,9 +37,10 @@
 ```
 |-node_modules
 |-src
+  |-fonts
   |-img
   |-js
-  |-sass
+  |-scss
   |-vendor
   |-views
 |-bower.json
@@ -51,7 +52,7 @@
 说明：
 
 * node_modules：依赖包，即运行`npm install`所安装下载的依赖。
-* src：项目开发目录，里面的img，js，less，vendor和views为前端所使用的开发文件目录。
+* src：项目开发目录，里面的img，js，less | sass，vendor和views为前端所使用的开发文件目录。
 * boser.json：js库依赖管理，运行`bower install`的时候，就是从这个文件读取需要下载的js库文件。
 * gulpfile.js：gulp自动化构建等项目任务就在这个文件里。
 * package.json：运行`npm install`的时候，就是从该文件读取所依赖的插件包，下载并放到node_modules目录下。
@@ -63,11 +64,11 @@
 
 以项目已经存在的demo为例，介绍gulp的两个基础构建命令。具体可参与`gulpfile.js`文件内容。
 
-* `gulp`：默认任务，在开发过程中可运行此任务。打开浏览器输入[http://localhost:8100/views/demo/demo.html](http://localhost:8100/views/demo/demo.html)或者[http://localhost:8100/views/](http://localhost:8100/views/)即可访问demo页面，修改开发文件并保存,可实时刷新项目页面。它包含'bundle', 'minLibCss', 'copyRequirejs', 'less', 'htmlDev', 'connect', 'images','watch' 等任务。
+* `gulp`：默认任务，在开发过程中可运行此任务。打开浏览器输入[http://localhost:3000/views/demo/demo.html](http://localhost:8100/views/demo/demo.html)或者[http://localhost:3000/views/](http://localhost:8100/views/)即可访问demo页面，修改开发文件并保存,可实时刷新项目页面。它包含'html', 'vendorStyles', 'styles', 'rjs', 'images', 'sprite', 'clear', 'cleanupFinal', buildZip, 'build', 'watch' 等任务。
 
-* `gulp prod`：生成环境所使用任务，该任务并不会监控文件变动和启动http服务，主要用于项目完成后部署使用，项目生成目录是`dist`。它包含'clean'，'bundle', 'vendorStyles', 'styles', 'rjs', 'images' 等任务。
+* `gulp prod`：生成环境所使用任务，该任务并不会监控文件变动和启动http服务，主要用于项目完成后部署使用，项目生成目录是`dist`。它包含'clean'，'rjs', 'vendorStyles', 'styles', 'rjs', 'images' 等任务。
 
-以下针对子任务进行说明：（大家可以参考`gulp`和`gulp prod`自行构建自己需要的任务集合）
+以下针对子任务进行说明：（大家可以参考`gulp`和`gulp --type=prod`自行构建自己需要的任务集合）
 
 * `rjs`：根据requirejs文件依赖，合并并压缩相关的依赖js库文件到项目生成目录下。
 * `vendorStyle`：合并并压缩第三方依赖样式到项目生成目录下。
@@ -76,7 +77,9 @@
 * `htmlProd`： 根据生产环境让html引用生产相关的js和css文件（压缩）。
 * `browser-sync`：http服务。
 * `images`: 图片文件夹拷贝到项目生成目录下（未添加图片压缩）。
-* `gulp`：监控文件变化，包括'images','bundle','less','htmlDev'。
+* `sprite`: 生成精灵图和sass文件分别拷贝到项目生成目录下。
+* `buildZip`: 压缩项目生成目录为zip包，直接发布。
+* `gulp`：监控文件变化，包括'html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs', 'browser-sync'。
 
 
 >以上子任务也可以单独运行，使用命令`gulp [ser]`就可以单独运行任务，其中[ser]为上面介绍的子任务。
