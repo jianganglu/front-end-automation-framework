@@ -68,7 +68,7 @@
 
 * `gulp prod`：生成环境所使用任务，该任务并不会监控文件变动和启动http服务，主要用于项目完成后部署使用，项目生成目录是`dist`。它包含'clean'，'rjs', 'vendorStyles', 'styles', 'rjs', 'images' 等任务。
 
-以下针对子任务进行说明：（大家可以参考`gulp`和`gulp --type=prod`自行构建自己需要的任务集合）
+以下针对子任务进行说明：（大家可以参考`gulp`和`gulp --type=prod build`自行构建自己需要的任务集合）
 
 * `rjs`：根据requirejs文件依赖，合并并压缩相关的依赖js库文件到项目生成目录下。
 * `vendorStyle`：合并并压缩第三方依赖样式到项目生成目录下。
@@ -78,6 +78,7 @@
 * `browser-sync`：http服务。
 * `images`: 图片文件夹拷贝到项目生成目录下（未添加图片压缩）。
 * `sprite`: 生成精灵图和sass文件分别拷贝到项目生成目录下。
+* `rev`: 静态文件缓存并修改文件名。
 * `buildZip`: 压缩项目生成目录为zip包，直接发布。
 * `gulp`：监控文件变化，包括'html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs', 'browser-sync'。
 

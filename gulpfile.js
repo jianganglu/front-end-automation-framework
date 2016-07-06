@@ -16,7 +16,7 @@ var basePaths = {
 };
 var paths = {
   html: {
-    src: './src/**/*.html',
+    src: './src/**/*.jsp',
     dst: './dist/'
   },
   img: {
@@ -39,6 +39,13 @@ var paths = {
   fonts: {
     src: basePaths.src + 'fonts/**/*',
     dst: basePaths.dst + 'fonts'
+  },
+  rev: {
+    all: basePaths.dst + 'rev/**/*.json',
+    libs: basePaths.dst + 'rev/css/libs',
+    styles: basePaths.dst + 'rev/css/styles',
+    js: basePaths.dst + 'rev/js',
+    img: basePaths.dst + 'rev/img'
   },
   watch: {
     src: {
@@ -84,6 +91,8 @@ var gulp         = require('gulp'),
     cache        = require('gulp-cache'),
     sourcemaps   = require('gulp-sourcemaps'),
     gutil        = require('gulp-util');
+    rev          = require('gulp-rev');  // 更改版本名
+    revCollector = require('gulp-rev-collector'); // gulp-rev的插件，用于html模板更改引用路径
 
 // Allows gulp --dev to be run for a more verbose output
 var isProduction = false;
@@ -163,15 +172,18 @@ gulp.task('vendorStyles', function() {
     .pipe(isProduction ? gutil.noop() : sourcemaps.write('./'))
     .pipe(plumber.stop())
     .pipe(gulp.dest(paths.css.vendorDst))
-    .pipe(isProduction ? cmq({
-      log: true
-    }) : gutil.noop()) // Combines Media Queries
+    // .pipe(isProduction ? cmq({
+    //   log: true
+    // }) : gutil.noop()) // Combines Media Queries
     .pipe(reload({stream:true})) // Inject Styles when style file is created
     // .pipe(isProduction ? rename({ suffix: '.min' }) : gutil.noop())
     .pipe(isProduction ? minifycss({
       maxLineLen: 80
     }) : gutil.noop())
+    .pipe(isProduction ? rev() : gutil.noop())
     .pipe(gulp.dest(paths.css.vendorDst))
+    .pipe(isProduction ? rev.manifest() : gutil.noop())
+    .pipe(isProduction ? gulp.dest(paths.rev.libs) : gutil.noop())
     .pipe(reload({stream:true})) // Inject Styles when min style file is created
     .pipe(notify({ message: 'Styles task complete', onLast: true }));
 });
@@ -206,15 +218,18 @@ gulp.task('styles', function() {
     .pipe(plumber.stop())
     .pipe(gulp.dest(paths.css.dst))
     .pipe(filter('**/*.css')) // Filtering stream to only css files
-    .pipe(isProduction ? cmq({
-      log: true
-    }) : gutil.noop()) // Combines Media Queries
+    // .pipe(isProduction ? cmq({
+    //   log: true
+    // }) : gutil.noop()) // Combines Media Queries
     .pipe(reload({stream:true})) // Inject Styles when style file is created
     // .pipe(isProduction ? rename({ suffix: '.min' }) : gutil.noop())
     .pipe(isProduction ? minifycss({
       maxLineLen: 80
     }) : gutil.noop())
+    .pipe(isProduction ? rev() : gutil.noop())
     .pipe(gulp.dest(paths.css.dst))
+    .pipe(isProduction ? rev.manifest() : gutil.noop())
+    .pipe(isProduction ? gulp.dest(paths.rev.styles) : gutil.noop())
     .pipe(reload({stream:true})) // Inject Styles when min style file is created
     .pipe(notify({ message: 'Styles task complete', onLast: true }));
 });
@@ -252,7 +267,10 @@ gulp.task('rjs', function() {
       .pipe(gulp.dest(paths.js.dst))
       // .pipe(rename(jsFileName + '.min.js'))
       .pipe(isProduction ? uglify() : gutil.noop())
-      .pipe(gulp.dest(paths.js.dst));
+      .pipe(isProduction ? rev() : gutil.noop())
+      .pipe(gulp.dest(paths.js.dst))
+      .pipe(isProduction ? rev.manifest() : gutil.noop())
+      .pipe(isProduction ? gulp.dest(paths.rev.js) : gutil.noop());
     }
   });
 });
@@ -268,7 +286,10 @@ gulp.task('images', function() {
     .pipe(newer(paths.img.dst))
     // .pipe(rimraf({force: true}))
     .pipe(imagemin({optimizationLevel: 7, progressive: true, interlaced: true}))
+    .pipe(isProduction ? rev() : gutil.noop())
     .pipe(gulp.dest(paths.img.dst))
+    .pipe(isProduction ? rev.manifest() : gutil.noop())
+    .pipe(isProduction ? gulp.dest(paths.rev.img) : gutil.noop())
     .pipe(notify({message: 'Images task complete', onLast: true}));
 });
 
@@ -310,6 +331,14 @@ gulp.task('sprite', function() {
   return merge(imgStream, cssStream);
 });
 
+// Static resource cache
+gulp.task('rev', function() {
+  return gulp.src([paths.rev.all, paths.html.src])
+    .pipe(revCollector({
+      replaceReved: true
+    }))
+    .pipe(gulp.dest(paths.html.dst));
+});
 
 /**
  * Clean gulp cache
@@ -354,7 +383,7 @@ gulp.task('buildZip', function() {
 
 // Package Distributable Theme
 gulp.task('build', ['clean'], function(cb) {
-  runSequence(['html', 'fonts', 'images', 'vendorStyles', 'styles', 'rjs'], 'buildZip','cleanupFinal', cb);
+  runSequence(['fonts', 'images', 'vendorStyles', 'styles', 'rjs'], 'rev', 'buildZip','cleanupFinal', cb);
 });
 
 // Watch Task

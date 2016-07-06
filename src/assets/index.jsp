@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7 ]> <html class="no-js ie6" lang="zh-CN"> <![endif]-->
 <!--[if IE 7 ]>    <html class="on-js ie7" lang="zh-CN"> <![endif]-->
 <!--[if IE 8 ]>    <html class="on-js ie8" lang="zh-CN"> <![endif]-->
@@ -18,7 +18,7 @@
 
     <!-- libs -->
     <link href="assets/css/libs.css" rel="stylesheet">
-    <link href="assets/css/style-red.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/style-red.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,6 +26,7 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <img="./img/unselect.png" />
   </head>
   <body>
     tests1
