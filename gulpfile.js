@@ -333,12 +333,27 @@ gulp.task('sprite', function() {
 
 // Static resource cache
 gulp.task('rev', function() {
-  return gulp.src([paths.rev.all, paths.html.src])
+
+  gulp.src([paths.rev.all, 'dist/assets/css/*.css'])
+      .pipe(revCollector({
+        replaceReved: true
+      }))
+      .pipe(gulp.dest(paths.css.dst));
+
+  gulp.src([paths.rev.all, paths.html.src])
     .pipe(revCollector({
       replaceReved: true
     }))
     .pipe(gulp.dest(paths.html.dst));
 });
+
+// gulp.task('rev', function() {
+//   return gulp.src([paths.rev.all, 'dist/assets/css/*.css'])
+//     .pipe(revCollector({
+//       replaceReved: true
+//     }))
+//     .pipe(gulp.dest(paths.css.dst));
+// });
 
 /**
  * Clean gulp cache
